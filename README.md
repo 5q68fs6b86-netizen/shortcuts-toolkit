@@ -109,14 +109,30 @@ uvx shortcuts-toolkit bookkeeping -o out/记账.shortcut
 |---|---|
 | `parse <file>` | 解析 .shortcut → 可读动作清单（常见动作映射中文） |
 | `inspect <file>` | 转成 XML plist 查看原始结构 |
+| `preview -i <spec.json>` | ⭐ 生成前预览：操作清单 + 模块 + 警告（防导入后「无法找到此操作」） |
 | `generate -i <spec.json> -o <out>` | 由 JSON 规格生成 unsigned .shortcut |
-| `sign <file> -o <out> [--mode]` | macOS 签名（anyone / people-who-know-me） |
+| `build -i <spec.json> -o <out>` | ⭐ 一键 generate→sign→清理中间文件 |
+| `sign <file> -o <out> [--mode] [--clean]` | macOS 签名；`--clean` 签后删 unsigned |
+| `url -n <name> [-i <input>]` | 生成已编码的 shortcuts://run-shortcut 调用链接 |
 | `icloud <url\|GUID>` | 从 iCloud 分享链接下载 unsigned .shortcut |
 | `build-rr --bundle-id ...` | 生成「运行 App Intent → POST 回传」工具模板 |
 | `bookkeeping --keys ... -o <out>` | 生成记账快捷指令（JSON → CSV/Numbers） |
 | `self-test` | 生成→解析→inspect 往返自测 + 签名尝试 |
 
 **生成前必查 `reference/`**（动作标识符/参数/变量/控制流，逆向自苹果未公开格式）：`reference/ACTIONS.md`（427 WF*Action）、`reference/APPINTENTS.md`（728 AppIntent）、`reference/PLIST_FORMAT.md`（**根结构必须扁平**）、`reference/VARIABLES.md`、`reference/CONTROL_FLOW.md`。
+
+## 🏷️ 命名规则（URL-safe，硬约束）
+
+名字（=内部名 `WFWorkflowName` = URL scheme 的 `name` 参数，三者同一个）必须 **URL-safe**：只允许 `[A-Za-z0-9_-]`，禁空格/中文/特殊字符（`. & = + /` 等）。
+
+原因：`shortcuts://run-shortcut?name=<名字>` 里中文/空格/特殊字符会破坏 URL 或需编码、不同客户端容忍度不一（[Apple 文档](https://support.apple.com/zh-cn/guide/shortcuts/apd624386f42/ios)）。CLI 自动校验，不合法报错并给 slug 建议。
+
+## ⚙️ 生成工作流（推荐顺序）
+
+1. `shortcuts-toolkit preview -i spec.json` — 确认动作清单、模块、第三方/未知警告
+2. `shortcuts-toolkit build -i spec.json -o out/<name>.signed.shortcut` — macOS 一键到正式成品（generate→sign→清理）
+3. Finder 双击 `.signed.shortcut` 导入，确认非空、无「无法找到此操作」
+4. `shortcuts-toolkit url -n <name> -i <输入>` — 生成已编码的调用链接（禁止手拼）
 
 ## ⚠️ 能力边界
 

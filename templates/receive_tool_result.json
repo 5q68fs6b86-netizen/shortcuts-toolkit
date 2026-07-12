@@ -1,5 +1,5 @@
 {
-  "name": "一扫·工具回传模板",
+  "name": "yisao_tool_callback",
   "client_release": "18.0",
   "minimum_client_version": 900,
   "types": ["NC"],

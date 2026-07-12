@@ -44,6 +44,12 @@ uv run shortcuts-toolkit self-test         # 端到端自测（含 macOS 签名�
 - canonical：`skill/SKILL.md`
 - 安装到本机各 agent 平台：`make install`（见 `Makefile`）
 
+## 生成工作流 + 命名规则（硬约束）
+1. **preview 确认**：`shortcuts-toolkit preview -i spec.json`，把「操作+模块+警告」呈现给用户确认。第三方 App 动作 / 未知内置动作会导致导入后「无法找到此操作」，必须提前发现。
+2. **URL-safe 命名**：名字必须 `[A-Za-z0-9_-]`（禁空格/中文/特殊字符/拼音），因为 URL scheme 的 `name` 就是内部名。不合法 CLI 报错并给建议。
+3. **build 一键**：`shortcuts-toolkit build -i spec.json -o out/<name>.signed.shortcut`（generate→sign→自动清理 unsigned）；或 `generate` + `sign --clean`。
+4. **调用**：用 `shortcuts-toolkit url -n <name> -i <输入>` 生成调用链接，**禁止手拼 URL**。
+
 ## 验证流程（生成后必做）
 1. `shortcuts-toolkit parse <生成文件>` — 确认动作链、变量引用正确。
 2. `shortcuts-toolkit sign <文件> -o <signed> --mode anyone` — macOS 签名成功。

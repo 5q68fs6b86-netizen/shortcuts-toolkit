@@ -6,6 +6,7 @@ import uuid
 from pathlib import Path
 from typing import Any
 
+from .naming import InvalidNameError, validate_name
 from .plist_utils import die
 
 
@@ -60,6 +61,10 @@ def cmd_generate(args: argparse.Namespace) -> None:
         die(f"规格文件不存在: {args.input}")
     with open(spec_path, encoding="utf-8") as f:
         spec = json.load(f)
+    try:
+        spec["name"] = validate_name(spec.get("name", ""))
+    except InvalidNameError as e:
+        die(str(e))
     plist = normalize_spec(spec)
     write_shortcut(plist, args.output)
     wf = plist.get("WFWorkflow", plist)
@@ -124,6 +129,10 @@ def build_receive_result_spec(args: argparse.Namespace) -> dict[str, Any]:
 
 def cmd_build_rr(args: argparse.Namespace) -> None:
     spec = build_receive_result_spec(args)
+    try:
+        spec["name"] = validate_name(spec.get("name", ""))
+    except InvalidNameError as e:
+        die(str(e))
     plist = normalize_spec(spec)
     write_shortcut(plist, args.output)
     n = len(plist.get("WFWorkflowActions", []))

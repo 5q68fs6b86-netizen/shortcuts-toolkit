@@ -4,6 +4,19 @@
 
 ## [Unreleased]
 
+### Added
+- `preview` 子命令：生成前预览「操作清单 + 模块汇总 + 警告」（识别未知内置/第三方 App 动作，预防导入后「无法找到此操作」）
+- `build` 子命令：一键工作流 generate → sign → 自动清理 unsigned 中间文件
+- `url` 子命令：生成已正确编码的 `shortcuts://run-shortcut?name=...&input=...`（中文/特殊字符安全）
+- `sign --clean`：签名成功后删除 unsigned 输入文件
+- URL-safe 命名校验（`naming` 模块）：内部名必须 `[A-Za-z0-9_-]`，CLI 自动校验报错并给 slug 建议
+- `actions_catalog`：解析 reference/ACTIONS.md(427)+APPINTENTS.md(728) 建标识符→模块映射
+
+### Changed
+- 生成类命令（generate/build/bookkeeping/build-rr）强制 URL-safe 命名
+- 默认记账快捷指令名 `记账` → `bookkeeping`
+- templates 示例名改为 URL-safe
+
 ## [0.1.0] - 2026-07-12
 
 ### Added

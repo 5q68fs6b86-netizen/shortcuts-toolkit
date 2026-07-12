@@ -5,6 +5,8 @@ import uuid
 from typing import Any
 
 from .generator import normalize_spec, write_shortcut
+from .naming import InvalidNameError, validate_name
+from .plist_utils import die
 
 
 def _var_ref_out(uuid_str: str, name: str) -> dict[str, Any]:
@@ -137,7 +139,7 @@ def build_bookkeeping_spec(args: argparse.Namespace):
         )
 
     return {
-        "name": args.name or "记账",
+        "name": args.name or "bookkeeping",
         "client_release": args.client_release,
         "minimum_client_version": args.min_version,
         "types": ["NC"],
@@ -155,6 +157,10 @@ def build_bookkeeping_spec(args: argparse.Namespace):
 def cmd_bookkeeping(args: argparse.Namespace) -> None:
     spec, flow = build_bookkeeping_spec(args)
     keys = [k.strip() for k in args.keys.split(",") if k.strip()]
+    try:
+        spec["name"] = validate_name(spec.get("name", ""))
+    except InvalidNameError as e:
+        die(str(e))
     plist = normalize_spec(spec)
     write_shortcut(plist, args.output)
     n = len(plist.get("WFWorkflowActions", []))

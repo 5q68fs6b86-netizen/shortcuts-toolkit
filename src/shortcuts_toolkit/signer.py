@@ -43,3 +43,9 @@ def cmd_sign(args: argparse.Namespace) -> None:
     print(r.stdout, end="")
     sz = Path(out_path).stat().st_size if Path(out_path).exists() else 0
     print(f"[OK] 已签名: {out_path}  ({sz} 字节)")
+    if getattr(args, "clean", False) and Path(out_path) != in_path:
+        try:
+            in_path.unlink()
+            print(f"[清理] 已删除 unsigned 输入: {in_path}")
+        except OSError as e:
+            print(f"[清理] 删除失败: {e}", file=sys.stderr)

@@ -8,6 +8,7 @@ import tempfile
 from pathlib import Path
 
 from .bookkeeping import cmd_bookkeeping
+from .build import cmd_build
 from .generator import cmd_build_rr, cmd_generate, normalize_spec
 from .icloud import cmd_icloud
 from .parser import (
@@ -18,7 +19,9 @@ from .parser import (
     extract_workflow,
     load_plist,
 )
+from .preview import cmd_preview
 from .signer import cmd_sign
+from .url import cmd_url
 
 
 def cmd_self_test(args: argparse.Namespace) -> None:
@@ -121,6 +124,28 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("-o", "--output", required=True, help="输出 .shortcut 路径")
     sp.set_defaults(func=cmd_generate)
 
+    sp = sub.add_parser("preview", help="预览规格：列出操作+模块+警告（不生成文件）")
+    sp.add_argument("-i", "--input", required=True, help="JSON 规格文件")
+    sp.set_defaults(func=cmd_preview)
+
+    sp = sub.add_parser(
+        "build", help="一键工作流：generate → sign → 只留正式成品(中间文件自动清理)"
+    )
+    sp.add_argument("-i", "--input", required=True, help="JSON 规格文件")
+    sp.add_argument("-o", "--output", required=True, help="输出 .signed.shortcut 路径")
+    sp.add_argument(
+        "--mode",
+        default="anyone",
+        choices=["anyone", "people-who-know-me"],
+        help="签名模式(默认 anyone)",
+    )
+    sp.set_defaults(func=cmd_build)
+
+    sp = sub.add_parser("url", help="生成已编码的 shortcuts://run-shortcut 调用链接")
+    sp.add_argument("-n", "--name", required=True, help="快捷指令名(URL-safe)")
+    sp.add_argument("-i", "--input", help="输入文本(自动编码，可中文)")
+    sp.set_defaults(func=cmd_url)
+
     sp = sub.add_parser("sign", help="用 macOS shortcuts sign 签名")
     sp.add_argument("input", help="待签名的 unsigned .shortcut")
     sp.add_argument("-o", "--output", help="签名后输出路径(默认 *.signed.shortcut)")
@@ -130,6 +155,7 @@ def build_parser() -> argparse.ArgumentParser:
         choices=["anyone", "people-who-know-me"],
         help="签名模式(默认 anyone)",
     )
+    sp.add_argument("--clean", action="store_true", help="签名成功后删除 unsigned 输入文件")
     sp.set_defaults(func=cmd_sign)
 
     sp = sub.add_parser("icloud", help="从 iCloud 分享链接下载 .shortcut")
@@ -164,7 +190,7 @@ def build_parser() -> argparse.ArgumentParser:
         default="date,type,amount,category,note",
         help="JSON 字段键，逗号分隔(默认 date,type,amount,category,note)",
     )
-    sp.add_argument("--name", default="记账", help="快捷指令名")
+    sp.add_argument("--name", default="bookkeeping", help="快捷指令名(URL-safe，仅 A-Za-z0-9_-)")
     sp.add_argument(
         "--csv-file",
         default="账本.csv",
