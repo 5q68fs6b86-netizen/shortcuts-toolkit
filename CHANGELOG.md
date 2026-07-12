@@ -12,6 +12,9 @@
 - URL-safe 命名校验（`naming` 模块）：内部名必须 `[A-Za-z0-9_-]`，CLI 自动校验报错并给 slug 建议
 - `actions_catalog`：解析 reference/ACTIONS.md(427)+APPINTENTS.md(728) 建标识符→模块映射
 - OpenCode skill 支持：README/Makefile 加 `.opencode/skills/` 安装（OpenCode 用标准 SKILL.md，兼容 `.claude/skills/`、`.agents/skills/`）
+- `verify` 子命令 + `preview --verify`：用 macOS dyld 共享缓存的真实 identifier 校验 spec，拦截「导入后无法找到此操作」（reference/ACTIONS.md 不规则映射含错误 token）
+- 内置 `data/known_actions.txt`（398 个系统真实 identifier）+ `scripts/extract_actions.sh`（dump 脚本，Intel/ASi 兜底）
+- `reference/ACTIONS.md` 顶部加警告 + 纠错表（generatemachinereadablecode→generatebarcode 等 3 处）
 
 ### Changed
 - 生成类命令（generate/build/bookkeeping/build-rr）强制 URL-safe 命名

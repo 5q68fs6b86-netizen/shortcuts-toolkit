@@ -46,6 +46,20 @@ def test_format_preview_no_warning_when_all_valid():
 
 
 def test_format_preview_lists_third_party_source_app():
-    spec = {"name": "t", "actions": [{"identifier": "com.foo.RunThing", "parameters": {}}]}
+    spec = {"name": "t", "actions": [
+        {"identifier": "com.foo.RunThing", "parameters": {}}]}
     out = format_preview(preview_spec(spec), "t")
     assert "com.foo" in out
+
+
+def test_preview_verify_system_flags_not_in_system(monkeypatch):
+    from shortcuts_toolkit import verify as verify_mod
+
+    monkeypatch.setattr(
+        verify_mod, "load_builtin_table",
+        lambda: ({"is.workflow.actions.showresult"}, "test"),
+    )
+    spec = {"name": "t", "actions": [
+        {"identifier": "is.workflow.actions.generatemachinereadablecode", "parameters": {}}]}
+    infos = preview_spec(spec, verify_system=True)
+    assert "not_in_system" in infos[0].kind

@@ -12,15 +12,31 @@ from .generator import normalize_spec
 from .plist_utils import die
 
 
-def preview_spec(spec: dict[str, Any]) -> list[ActionInfo]:
-    """解析规格，返回每个动作的分类信息（不生成文件）。"""
+def preview_spec(spec: dict[str, Any], verify_system: bool = False) -> list[ActionInfo]:
+    """解析规格，返回每个动作的分类信息（不生成文件）。
+
+    verify_system=True 时（macOS），用系统真实 identifier 复核：reference 判为内置
+    但系统未注册的，标为 builtin_not_in_system（拦截导入后「无法找到此操作」）。
+    """
     plist = normalize_spec(spec)
     actions = plist.get("WFWorkflowActions", [])
+    builtin: set[str] | None = None
+    source = ""
+    if verify_system:
+        from .verify import load_builtin_table
+
+        builtin, source = load_builtin_table()
     infos: list[ActionInfo] = []
     for a in actions:
         ident = a.get("WFWorkflowActionIdentifier", "?")
         params = a.get("WFWorkflowActionParameters", {}) or {}
-        infos.append(classify_action(ident, params))
+        info = classify_action(ident, params)
+        if builtin is not None and info.kind == "builtin" and ident not in builtin:
+            info = ActionInfo(
+                ident, info.label, info.module, "builtin_not_in_system", None,
+                f"系统未注册（{source}），导入后会「无法找到此操作」",
+            )
+        infos.append(info)
     return infos
 
 
@@ -62,5 +78,10 @@ def cmd_preview(args: argparse.Namespace) -> None:
         die(f"规格文件不存在: {args.input}")
     with open(spec_path, encoding="utf-8") as f:
         spec = json.load(f)
-    infos = preview_spec(spec)
+    infos = preview_spec(spec, verify_system=getattr(args, "verify", False))
     print(format_preview(infos, spec.get("name", "(未命名)")))
+    if getattr(args, "verify", False):
+        from .verify import load_builtin_table
+
+        _, source = load_builtin_table()
+        print(f"\n(系统复核: {source})")

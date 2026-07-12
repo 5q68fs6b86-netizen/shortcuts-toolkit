@@ -21,6 +21,7 @@ allowed-tools: Bash, Read, Write
 | 读懂/分析 .shortcut | `shortcuts-toolkit parse <file>` |
 | 看原始 plist 结构 | `shortcuts-toolkit inspect <file>` |
 | **生成前预览（操作+模块+警告）** | `shortcuts-toolkit preview -i spec.json` |
+| **⭐ 系统校验（拦截「无法找到此操作」）** | `shortcuts-toolkit verify -i spec.json`（或 `preview --verify`） |
 | 按规格生成 unsigned | `shortcuts-toolkit generate -i spec.json -o out.shortcut` |
 | **一键到正式成品（generate→sign→清理）** | `shortcuts-toolkit build -i spec.json -o out.signed.shortcut` |
 | 签名（macOS，可 `--clean` 删中间文件） | `shortcuts-toolkit sign <file> -o signed.shortcut --mode anyone --clean` |
@@ -34,9 +35,10 @@ allowed-tools: Bash, Read, Write
 
 ## ⭐ 生成工作流（硬性流程，生成新快捷指令时必须按序，不得跳步）
 
-1. **preview 确认** — `shortcuts-toolkit preview -i spec.json`，把输出的「操作清单 + 模块汇总 + 警告」**呈现给用户确认**。重点确认：
-   - ⚠️ **第三方 App 动作**（模块显示 `App: <bundle>`）→ 用户设备必须装了对应 App，否则导入后报「无法找到此操作」。
-   - ⚠️ **未知内置动作**（不在 427 清单）→ 可能拼错/过时，同样会「无法找到此操作」。
+1. **preview + verify 确认** — `shortcuts-toolkit preview --verify -i spec.json`（macOS 用系统真实 identifier 复核），把「操作清单 + 模块汇总 + 警告」**呈现给用户确认**；或单独 `shortcuts-toolkit verify -i spec.json`。重点确认：
+   - ⚠️ **系统未注册的内置动作**（`builtin_not_in_system`，如 `generatemachinereadablecode`/`quicklook`）→ reference 有错，导入后必报「无法找到此操作」，必须换成系统真实 identifier（见 `reference/ACTIONS.md` 顶部纠错表）。
+   - ⚠️ **第三方 App 动作**（模块显示 `App: <bundle>`）→ 用户设备必须装了对应 App。
+   - ⚠️ **未知内置动作**（不在 427 清单）→ 可能拼错/过时。
 2. **规范命名** — 名字必须 URL-safe（见下「命名规则」）。不合法 CLI 会报错并给建议，**改到合法为止**。
 3. **生成** — macOS 用 `shortcuts-toolkit build -i spec.json -o out/<name>.signed.shortcut`（一键 generate→sign→自动清理 unsigned 中间文件）；非 macOS 先 `generate`，再传到 macOS `sign --clean`。
 4. **导入** — Finder 双击 `.signed.shortcut`，**确认非空、无红字「无法找到此操作」**。

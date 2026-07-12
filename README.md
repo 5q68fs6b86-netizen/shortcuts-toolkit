@@ -118,6 +118,7 @@ uvx shortcuts-toolkit bookkeeping -o out/记账.shortcut
 | `icloud <url\|GUID>` | 从 iCloud 分享链接下载 unsigned .shortcut |
 | `build-rr --bundle-id ...` | 生成「运行 App Intent → POST 回传」工具模板 |
 | `bookkeeping --keys ... -o <out>` | 生成记账快捷指令（JSON → CSV/Numbers） |
+| `verify -i <spec.json>` | ⭐ 用系统真实 identifier 校验（macOS），拦截导入后「无法找到此操作」 |
 | `self-test` | 生成→解析→inspect 往返自测 + 签名尝试 |
 
 **生成前必查 `reference/`**（动作标识符/参数/变量/控制流，逆向自苹果未公开格式）：`reference/ACTIONS.md`（427 WF*Action）、`reference/APPINTENTS.md`（728 AppIntent）、`reference/PLIST_FORMAT.md`（**根结构必须扁平**）、`reference/VARIABLES.md`、`reference/CONTROL_FLOW.md`。

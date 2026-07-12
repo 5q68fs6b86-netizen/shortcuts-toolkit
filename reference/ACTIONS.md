@@ -2,6 +2,22 @@
 
 Complete catalog of all 427 WF*Action classes and their identifiers.
 
+> ⚠️ **重要警告（2026-07-12 实测）**：本表的「不规则映射」（class ≠ identifier 的动作）
+> 部分给了**错误的 identifier**（把类名派生名当成了 identifier），导入后会「无法找到此操作」。
+> 已确认错误见下方「纠错表」。**生成快捷指令前务必用 `shortcuts-toolkit verify -i spec.json`
+> 或 `preview --verify` 做系统真实校验**（macOS 实时 grep dyld 共享缓存，最权威），不要盲信本表。
+
+## 纠错表（class 派生名 → 系统真实 identifier）
+
+| 动作 | 本表（错） | 系统真实 identifier |
+|---|---|---|
+| 生成二维码 | `generatemachinereadablecode` | `generatebarcode` |
+| 扫码 | `scanmachinereadablecode` | `scanbarcode` |
+| 快速查看 | `quicklook` | `previewdocument` |
+
+> 完整真实 identifier（398 个，dump 自系统）见 `src/shortcuts_toolkit/data/known_actions.txt`；
+> 重建命令：`bash scripts/extract_actions.sh`。
+
 ## Identifier Mapping Rules
 
 ### Standard Mapping

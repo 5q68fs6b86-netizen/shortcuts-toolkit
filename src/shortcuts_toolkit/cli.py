@@ -22,6 +22,7 @@ from .parser import (
 from .preview import cmd_preview
 from .signer import cmd_sign
 from .url import cmd_url
+from .verify import cmd_verify
 
 
 def cmd_self_test(args: argparse.Namespace) -> None:
@@ -126,7 +127,15 @@ def build_parser() -> argparse.ArgumentParser:
 
     sp = sub.add_parser("preview", help="预览规格：列出操作+模块+警告（不生成文件）")
     sp.add_argument("-i", "--input", required=True, help="JSON 规格文件")
+    sp.add_argument("--verify", action="store_true",
+                    help="macOS 上用系统真实 identifier 复核（拦截 reference 错误）")
     sp.set_defaults(func=cmd_preview)
+
+    sp = sub.add_parser(
+        "verify", help="⭐ 用系统真实 identifier 校验 spec，拦截导入后「无法找到此操作」"
+    )
+    sp.add_argument("-i", "--input", required=True, help="JSON 规格文件")
+    sp.set_defaults(func=cmd_verify)
 
     sp = sub.add_parser(
         "build", help="一键工作流：generate → sign → 只留正式成品(中间文件自动清理)"
