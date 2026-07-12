@@ -11,6 +11,8 @@ from .actions_catalog import ActionInfo, classify_action
 from .generator import normalize_spec
 from .plist_utils import die
 
+_BUILTIN_PREFIX = "is.workflow.actions."
+
 
 def preview_spec(spec: dict[str, Any], verify_system: bool = False) -> list[ActionInfo]:
     """解析规格，返回每个动作的分类信息（不生成文件）。
@@ -31,11 +33,15 @@ def preview_spec(spec: dict[str, Any], verify_system: bool = False) -> list[Acti
         ident = a.get("WFWorkflowActionIdentifier", "?")
         params = a.get("WFWorkflowActionParameters", {}) or {}
         info = classify_action(ident, params)
-        if builtin is not None and info.kind == "builtin" and ident not in builtin:
-            info = ActionInfo(
-                ident, info.label, info.module, "builtin_not_in_system", None,
-                f"系统未注册（{source}），导入后会「无法找到此操作」",
-            )
+        if builtin is not None and ident.startswith(_BUILTIN_PREFIX):
+            if ident not in builtin:
+                info = ActionInfo(
+                    ident, info.label, info.module, "builtin_not_in_system", None,
+                    f"系统未注册（{source}），导入后会「无法找到此操作」",
+                )
+            elif info.kind == "unknown_builtin":
+                # 系统已注册但 reference 未收录 → 放行
+                info = ActionInfo(ident, info.label, info.module, "builtin", None, "")
         infos.append(info)
     return infos
 

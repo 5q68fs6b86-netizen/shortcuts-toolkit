@@ -101,12 +101,16 @@ def verify_spec(spec: dict[str, Any]) -> tuple[list[ActionInfo], str]:
         ident = a.get("WFWorkflowActionIdentifier", "?")
         params = a.get("WFWorkflowActionParameters", {}) or {}
         info = classify_action(ident, params)
-        # 权威复核：内置动作若不在系统真实集合 → 标红
-        if info.kind == "builtin" and ident not in builtin:
-            info = ActionInfo(
-                ident, info.label, info.module, "builtin_not_in_system", None,
-                f"系统（{source}）未注册此 identifier，导入后大概率「无法找到此操作」",
-            )
+        # 权威复核：内置前缀动作用系统真实集合判定（系统是权威，reference 可能滞后）
+        if ident.startswith(_BUILTIN_PREFIX):
+            if ident not in builtin:
+                info = ActionInfo(
+                    ident, info.label, info.module, "builtin_not_in_system", None,
+                    f"系统（{source}）未注册此 identifier，导入后大概率「无法找到此操作」",
+                )
+            else:
+                # 系统已注册 → 放行（即便 reference 未收录也认作合法内置）
+                info = ActionInfo(ident, info.label, info.module, "builtin", info.source_app, "")
         infos.append(info)
     return infos, source
 

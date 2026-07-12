@@ -62,3 +62,12 @@ def test_cmd_verify_passes_when_all_known(tmp_path, capsys):
     ):
         cmd_verify(argparse.Namespace(input=str(spec)))
     assert "全部动作系统可识别" in capsys.readouterr().out
+
+
+def test_verify_system_known_but_not_in_reference():
+    """系统有但 reference 未收录的新动作 → 应放行（不误判坏）。"""
+    fake = {"is.workflow.actions.brandnewaction"}  # reference 没有，但系统有
+    with patch.object(verify, "load_builtin_table", return_value=(fake, "test")):
+        infos, _ = verify_spec({"name": "t", "actions": [
+            {"identifier": "is.workflow.actions.brandnewaction", "parameters": {}}]})
+    assert infos[0].kind == "builtin"  # 系统有 → 放行，不误判 unknown_builtin
