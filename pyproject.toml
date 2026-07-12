@@ -1,0 +1,74 @@
+[project]
+name = "shortcuts-toolkit"
+version = "0.1.0"
+description = "Apple Shortcuts (.shortcut) parse / generate / sign / import toolkit — pure stdlib CLI + AI agent skill."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "moonhorse" }]
+keywords = ["apple-shortcuts", "ios", "macos", "automation", "cli", "ai-skill", "shortcut", "plist"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+]
+
+[project.scripts]
+shortcuts-toolkit = "shortcuts_toolkit.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/moonhorse/shortcuts-toolkit"
+Repository = "https://github.com/moonhorse/shortcuts-toolkit"
+Issues = "https://github.com/moonhorse/shortcuts-toolkit/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/shortcuts_toolkit"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "pytest-cov>=5",
+    "ruff>=0.6",
+    "mypy>=1.10",
+]
+
+# 开发依赖走国内源（清华），符合本机规范；发布上传仍走官方 PyPI。
+[[tool.uv.index]]
+name = "tsinghua"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.10"
+packages = ["shortcuts_toolkit"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.coverage.run]
+source = ["shortcuts_toolkit"]

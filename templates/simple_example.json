@@ -1,0 +1,18 @@
+{
+  "name": "示例·获取文本并显示结果",
+  "client_release": "18.0",
+  "minimum_client_version": 900,
+  "types": ["NC"],
+  "input_classes": ["WFTextContentItem"],
+  "icon": { "color": 4284939840, "glyph": 61440 },
+  "actions": [
+    {
+      "identifier": "is.workflow.actions.gettext",
+      "parameters": { "WFTextActionText": "你好，世界" }
+    },
+    {
+      "identifier": "is.workflow.actions.showresult",
+      "parameters": {}
+    }
+  ]
+}

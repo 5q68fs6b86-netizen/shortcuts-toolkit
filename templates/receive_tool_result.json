@@ -1,0 +1,37 @@
+{
+  "name": "一扫·工具回传模板",
+  "client_release": "18.0",
+  "minimum_client_version": 900,
+  "types": ["NC"],
+  "input_classes": ["WFTextContentItem"],
+  "icon": { "color": 4282601983, "glyph": 61440 },
+  "actions": [
+    {
+      "identifier": "is.workflow.actions.gettext",
+      "parameters": { "WFTextActionText": "" }
+    },
+    {
+      "identifier": "com.example.yisao.ReceiveToolResult",
+      "parameters": {
+        "AppIntentDescriptor": {
+          "BundleIdentifier": "com.example.yisao",
+          "TeamIdentifier": "REPLACE_WITH_TEAM_ID",
+          "AppIntentIdentifier": "ReceiveToolResult",
+          "Name": "ReceiveToolResult"
+        },
+        "ShowWhenRun": false,
+        "UUID": "00000000-0000-0000-0000-000000000000"
+      }
+    },
+    {
+      "identifier": "is.workflow.actions.getcontentofurl",
+      "parameters": {
+        "WFURLActionURL": "https://your-server.example.com/tool/callback",
+        "WFHTTPMethod": "POST",
+        "WFHTTPHeaders": { "Content-Type": "application/json" },
+        "WFHTTPBodyType": "JSON",
+        "WFJSONBody": { "result": "{ShortcutInput}" }
+      }
+    }
+  ]
+}
