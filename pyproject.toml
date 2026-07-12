@@ -5,7 +5,7 @@ description = "Apple Shortcuts (.shortcut) parse / generate / sign / import tool
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
-authors = [{ name = "moonhorse" }]
+authors = [{ name = "moonhorsemmy" }]
 keywords = ["apple-shortcuts", "ios", "macos", "automation", "cli", "ai-skill", "shortcut", "plist"]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -29,9 +29,9 @@ classifiers = [
 shortcuts-toolkit = "shortcuts_toolkit.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/moonhorse/shortcuts-toolkit"
-Repository = "https://github.com/moonhorse/shortcuts-toolkit"
-Issues = "https://github.com/moonhorse/shortcuts-toolkit/issues"
+Homepage = "https://github.com/moonhorsemmy/shortcuts-toolkit"
+Repository = "https://github.com/moonhorsemmy/shortcuts-toolkit"
+Issues = "https://github.com/moonhorsemmy/shortcuts-toolkit/issues"
 
 [build-system]
 requires = ["hatchling"]

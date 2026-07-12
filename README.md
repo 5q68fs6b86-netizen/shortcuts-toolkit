@@ -2,7 +2,7 @@
 
 > 🇨🇳 中文 · 🇬🇧 [English](#english)
 
-[![CI](https://github.com/moonhorse/shortcuts-toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/moonhorse/shortcuts-toolkit/actions/workflows/ci.yml)
+[![CI](https://github.com/moonhorsemmy/shortcuts-toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/moonhorsemmy/shortcuts-toolkit/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
@@ -93,7 +93,7 @@ uvx shortcuts-toolkit bookkeeping -o out/记账.shortcut
 
 安装后，agent 在你提到「快捷指令 / 解析 / 生成 / 签名」时会自动调用 `shortcuts-toolkit` CLI（解析/生成/签名/导入），**无需手写 plist**。
 
-> 一键安装（跨工具）：`npx skills add https://github.com/moonhorse/shortcuts-toolkit`
+> 一键安装（跨工具）：`npx skills add https://github.com/moonhorsemmy/shortcuts-toolkit`
 
 ## 💬 用于 ChatGPT / Gemini（网页版）
 
@@ -163,7 +163,7 @@ shortcuts-toolkit/
 
 ## 📄 License
 
-MIT © moonhorse。`reference/` 文档 MIT © openclaw/skills contributors (erik-agens)，见 `reference/LICENSE`。
+MIT © moonhorsemmy。`reference/` 文档 MIT © openclaw/skills contributors (erik-agens)，见 `reference/LICENSE`。
 
 ## 🙏 致谢
 
@@ -182,6 +182,6 @@ A CLI toolkit for **Apple Shortcuts (`.shortcut`)** — parse / generate / sign 
 
 **Install**: `uvx shortcuts-toolkit --help` · `pip install shortcuts-toolkit`
 
-**As an agent skill**: copy `skill/` into your agent's skill dir (`.claude/skills/`, `.github/skills/`, `.cursor/rules/`, `.codex/skills/`, `.kilo/skills/`) or `npx skills add https://github.com/moonhorse/shortcuts-toolkit`. See the Chinese section above for full details and the ChatGPT/Gemini web usage recipe.
+**As an agent skill**: copy `skill/` into your agent's skill dir (`.claude/skills/`, `.github/skills/`, `.cursor/rules/`, `.codex/skills/`, `.kilo/skills/`) or `npx skills add https://github.com/moonhorsemmy/shortcuts-toolkit`. See the Chinese section above for full details and the ChatGPT/Gemini web usage recipe.
 
 **License**: MIT. The `reference/` docs are MIT © openclaw/skills contributors (erik-agens).
