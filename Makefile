@@ -1,4 +1,4 @@
-.PHONY: install install-all install-claude install-copilot install-cursor install-codex install-kilo test lint format check self-test clean
+.PHONY: install install-all install-claude install-copilot install-cursor install-codex install-kilo install-opencode test lint format check self-test clean
 
 SKILL_NAME := shortcuts-toolkit
 SKILL_SRC := skill
@@ -6,7 +6,7 @@ SKILL_SRC := skill
 ## 一键把 skill/ 安装到本机检测到的各 agent 平台目录
 install: install-all
 
-install-all: install-claude install-copilot install-cursor install-codex install-kilo
+install-all: install-claude install-copilot install-cursor install-codex install-kilo install-opencode
 	@echo ""
 	@echo "==> $(SKILL_NAME) skill 安装完成（已装到所有检测到的平台）。"
 
@@ -25,6 +25,9 @@ install-codex:
 
 install-kilo:
 	@if [ -d ~/.kilo ] || [ -d .kilo ]; then mkdir -p .kilo/skills && rm -rf .kilo/skills/$(SKILL_NAME) && cp -r $(SKILL_SRC) .kilo/skills/$(SKILL_NAME) && echo "  ✓ Kilo:           .kilo/skills/$(SKILL_NAME)"; else echo "  · Kilo:           未检测到 ~/.kilo，跳过"; fi
+
+install-opencode:
+	@if [ -d .opencode ] || [ -d ~/.config/opencode ]; then mkdir -p .opencode/skills && rm -rf .opencode/skills/$(SKILL_NAME) && cp -r $(SKILL_SRC) .opencode/skills/$(SKILL_NAME) && echo "  ✓ OpenCode:       .opencode/skills/$(SKILL_NAME)"; else echo "  · OpenCode:       未检测到 .opencode，跳过"; fi
 
 ## 开发任务
 test:

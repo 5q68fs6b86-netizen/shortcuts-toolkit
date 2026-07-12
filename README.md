@@ -89,6 +89,7 @@ uvx shortcuts-toolkit bookkeeping -o out/记账.shortcut
 | Cursor | `cp -r skill/ .cursor/rules/shortcuts-toolkit` |
 | Codex CLI | `cp -r skill/ .codex/skills/shortcuts-toolkit` |
 | Kilo | `cp -r skill/ .kilo/skills/shortcuts-toolkit` |
+| OpenCode | `cp -r skill/ .opencode/skills/shortcuts-toolkit`（也兼容 `~/.config/opencode/skills/`、`.claude/skills/`、`.agents/skills/`） |
 | 通用 | `cp skill/SKILL.md AGENTS.md`（30+ agent 读 AGENTS.md，含 Gemini CLI/Jules/Devin/Aider） |
 
 安装后，agent 在你提到「快捷指令 / 解析 / 生成 / 签名」时会自动调用 `shortcuts-toolkit` CLI（解析/生成/签名/导入），**无需手写 plist**。

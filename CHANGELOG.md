@@ -11,6 +11,7 @@
 - `sign --clean`：签名成功后删除 unsigned 输入文件
 - URL-safe 命名校验（`naming` 模块）：内部名必须 `[A-Za-z0-9_-]`，CLI 自动校验报错并给 slug 建议
 - `actions_catalog`：解析 reference/ACTIONS.md(427)+APPINTENTS.md(728) 建标识符→模块映射
+- OpenCode skill 支持：README/Makefile 加 `.opencode/skills/` 安装（OpenCode 用标准 SKILL.md，兼容 `.claude/skills/`、`.agents/skills/`）
 
 ### Changed
 - 生成类命令（generate/build/bookkeeping/build-rr）强制 URL-safe 命名
