@@ -1,0 +1,423 @@
+{
+  "name": "md_clipboard_to_word",
+  "client_version": "3300.7.1",
+  "minimum_client_version": 900,
+  "input_classes": ["WFStringContentItem"],
+  "types": ["NC"],
+  "icon": {
+    "color": 4282601983,
+    "glyph": 59493
+  },
+  "actions": [
+    {
+      "identifier": "is.workflow.actions.getclipboard",
+      "parameters": {
+        "UUID": "10000000-0000-4000-8000-000000000001"
+      }
+    },
+    {
+      "identifier": "is.workflow.actions.gettext",
+      "parameters": {
+        "UUID": "10000000-0000-4000-8000-000000000002",
+        "WFTextActionText": {
+          "Value": {
+            "string": "请根据以下 Markdown 内容生成一个简洁、准确、适合作为 Word 文档文件名的中文标题。只输出标题本身，不要引号、解释、Markdown 标记或换行。标题不超过 40 个字符，禁止使用 / \\ : * ? \" < > | 等文件名非法字符。\n\nMarkdown 内容：\n￼",
+            "attachmentsByRange": {
+              "{139, 1}": {
+                "OutputUUID": "10000000-0000-4000-8000-000000000001",
+                "OutputName": "Clipboard",
+                "Type": "ActionOutput"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        }
+      }
+    },
+    {
+      "identifier": "is.workflow.actions.downloadurl",
+      "parameters": {
+        "UUID": "10000000-0000-4000-8000-000000000003",
+        "WFURL": "https://nnnn.114514heihei.eu.org/v1/chat/completions",
+        "WFHTTPMethod": "POST",
+        "WFHTTPBodyType": "JSON",
+        "WFHTTPHeaders": {
+          "Value": {
+            "WFDictionaryFieldValueItems": [
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "Value": {
+                    "string": "Authorization",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                },
+                "WFValue": {
+                  "Value": {
+                    "string": "Bearer YOUR_API_KEY",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "Value": {
+                    "string": "Content-Type",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                },
+                "WFValue": {
+                  "Value": {
+                    "string": "application/json",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                }
+              }
+            ]
+          },
+          "WFSerializationType": "WFDictionaryFieldValue"
+        },
+        "WFJSONValues": {
+          "Value": {
+            "WFDictionaryFieldValueItems": [
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "Value": {
+                    "string": "model",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                },
+                "WFValue": {
+                  "Value": {
+                    "string": "fast",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                }
+              },
+              {
+                "WFItemType": 2,
+                "WFKey": {
+                  "Value": {
+                    "string": "messages",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                },
+                "WFValue": {
+                  "Value": [
+                    {
+                      "WFItemType": 1,
+                      "WFValue": {
+                        "Value": {
+                          "Value": {
+                            "WFDictionaryFieldValueItems": [
+                              {
+                                "WFItemType": 0,
+                                "WFKey": {
+                                  "Value": {
+                                    "string": "role",
+                                    "attachmentsByRange": {}
+                                  },
+                                  "WFSerializationType": "WFTextTokenString"
+                                },
+                                "WFValue": {
+                                  "Value": {
+                                    "string": "user",
+                                    "attachmentsByRange": {}
+                                  },
+                                  "WFSerializationType": "WFTextTokenString"
+                                }
+                              },
+                              {
+                                "WFItemType": 0,
+                                "WFKey": {
+                                  "Value": {
+                                    "string": "content",
+                                    "attachmentsByRange": {}
+                                  },
+                                  "WFSerializationType": "WFTextTokenString"
+                                },
+                                "WFValue": {
+                                  "Value": {
+                                    "string": "￼",
+                                    "attachmentsByRange": {
+                                      "{0, 1}": {
+                                        "OutputUUID": "10000000-0000-4000-8000-000000000002",
+                                        "OutputName": "Text",
+                                        "Type": "ActionOutput"
+                                      }
+                                    }
+                                  },
+                                  "WFSerializationType": "WFTextTokenString"
+                                }
+                              }
+                            ]
+                          },
+                          "WFSerializationType": "WFDictionaryFieldValue"
+                        },
+                        "WFSerializationType": "WFDictionaryFieldValue"
+                      }
+                    }
+                  ],
+                  "WFSerializationType": "WFArrayParameterState"
+                }
+              },
+              {
+                "WFItemType": 3,
+                "WFKey": {
+                  "Value": {
+                    "string": "temperature",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                },
+                "WFValue": {
+                  "Value": {
+                    "string": "0.2",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "Value": {
+                    "string": "reasoning_effort",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                },
+                "WFValue": {
+                  "Value": {
+                    "string": "low",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                }
+              },
+              {
+                "WFItemType": 3,
+                "WFKey": {
+                  "Value": {
+                    "string": "max_tokens",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                },
+                "WFValue": {
+                  "Value": {
+                    "string": "80",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                }
+              }
+            ]
+          },
+          "WFSerializationType": "WFDictionaryFieldValue"
+        }
+      }
+    },
+    {
+      "identifier": "is.workflow.actions.detect.dictionary",
+      "parameters": {
+        "UUID": "10000000-0000-4000-8000-000000000004",
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "10000000-0000-4000-8000-000000000003",
+            "OutputName": "Contents of URL",
+            "Type": "ActionOutput"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        }
+      }
+    },
+    {
+      "identifier": "is.workflow.actions.getvalueforkey",
+      "parameters": {
+        "UUID": "10000000-0000-4000-8000-000000000005",
+        "WFGetDictionaryValueType": "Value",
+        "WFDictionaryKey": "choices",
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "10000000-0000-4000-8000-000000000004",
+            "OutputName": "Dictionary",
+            "Type": "ActionOutput"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        }
+      }
+    },
+    {
+      "identifier": "is.workflow.actions.getitemfromlist",
+      "parameters": {
+        "UUID": "10000000-0000-4000-8000-000000000006",
+        "WFItemSpecifier": "First Item",
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "10000000-0000-4000-8000-000000000005",
+            "OutputName": "Dictionary Value",
+            "Type": "ActionOutput"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        }
+      }
+    },
+    {
+      "identifier": "is.workflow.actions.getvalueforkey",
+      "parameters": {
+        "UUID": "10000000-0000-4000-8000-000000000007",
+        "WFGetDictionaryValueType": "Value",
+        "WFDictionaryKey": "message",
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "10000000-0000-4000-8000-000000000006",
+            "OutputName": "Item from List",
+            "Type": "ActionOutput"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        }
+      }
+    },
+    {
+      "identifier": "is.workflow.actions.getvalueforkey",
+      "parameters": {
+        "UUID": "10000000-0000-4000-8000-000000000008",
+        "WFGetDictionaryValueType": "Value",
+        "WFDictionaryKey": "content",
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "10000000-0000-4000-8000-000000000007",
+            "OutputName": "Dictionary Value",
+            "Type": "ActionOutput"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        }
+      }
+    },
+    {
+      "identifier": "is.workflow.actions.downloadurl",
+      "parameters": {
+        "UUID": "10000000-0000-4000-8000-000000000009",
+        "WFURL": "https://md2word.ciallo0d000721.cc.cd/api/markdown-to-word",
+        "WFHTTPMethod": "POST",
+        "WFHTTPBodyType": "JSON",
+        "WFHTTPHeaders": {
+          "Value": {
+            "WFDictionaryFieldValueItems": [
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "Value": {
+                    "string": "Content-Type",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                },
+                "WFValue": {
+                  "Value": {
+                    "string": "application/json",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                }
+              }
+            ]
+          },
+          "WFSerializationType": "WFDictionaryFieldValue"
+        },
+        "WFJSONValues": {
+          "Value": {
+            "WFDictionaryFieldValueItems": [
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "Value": {
+                    "string": "markdown",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                },
+                "WFValue": {
+                  "Value": {
+                    "string": "￼",
+                    "attachmentsByRange": {
+                      "{0, 1}": {
+                        "OutputUUID": "10000000-0000-4000-8000-000000000001",
+                        "OutputName": "Clipboard",
+                        "Type": "ActionOutput"
+                      }
+                    }
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "Value": {
+                    "string": "filename",
+                    "attachmentsByRange": {}
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                },
+                "WFValue": {
+                  "Value": {
+                    "string": "￼",
+                    "attachmentsByRange": {
+                      "{0, 1}": {
+                        "OutputUUID": "10000000-0000-4000-8000-000000000008",
+                        "OutputName": "Dictionary Value",
+                        "Type": "ActionOutput"
+                      }
+                    }
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                }
+              }
+            ]
+          },
+          "WFSerializationType": "WFDictionaryFieldValue"
+        }
+      }
+    },
+    {
+      "identifier": "is.workflow.actions.documentpicker.save",
+      "parameters": {
+        "UUID": "10000000-0000-4000-8000-00000000000A",
+        "WFAskWhereToSave": false,
+        "WFSaveFileOverwrite": true,
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "10000000-0000-4000-8000-000000000009",
+            "OutputName": "Contents of URL",
+            "Type": "ActionOutput"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "WFFileDestinationPath": {
+          "Value": {
+            "string": "￼.docx",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "OutputUUID": "10000000-0000-4000-8000-000000000008",
+                "OutputName": "Dictionary Value",
+                "Type": "ActionOutput"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        }
+      }
+    }
+  ]
+}
